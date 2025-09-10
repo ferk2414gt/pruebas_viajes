@@ -5,7 +5,32 @@
   <title>Usuario 1</title>
 </head>
 <body>
-  <h1>Bienvenido Usuario 1</h1>
-  <p>Contenido exclusivo de esta sección.</p>
+  <h1>Datos del Usuario 1</h1>
+  <table border="1">
+    <tr><th>Nombre</th><td id="nombre"></td></tr>
+    <tr><th>Edad</th><td id="edad"></td></tr>
+    <tr><th>Sexo</th><td id="sexo"></td></tr>
+    <tr><th>Sangre</th><td id="sangre"></td></tr>
+  </table>
+
+  <script>
+    // URL de tu Google Sheet publicado como CSV
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCtki-el1Or7U9wjnddNSdoDZH486gWTUB7sdo_fugwgr5PheHBEe0pyFOzWaI-urREr3ykgdyskK0/pubhtml';
+
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n').map(r => r.split(','));
+        
+        // Asumimos que la fila 0 es encabezado y fila 1 es Usuario 1
+        const usuario1 = rows[1];
+
+        document.getElementById('nombre').textContent = usuario1[0];
+        document.getElementById('edad').textContent = usuario1[1];
+        document.getElementById('sexo').textContent = usuario1[2];
+        document.getElementById('sangre').textContent = usuario1[3];
+      })
+      .catch(err => console.error('Error al cargar CSV:', err));
+  </script>
 </body>
 </html>
