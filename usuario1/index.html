@@ -14,16 +14,18 @@
   </table>
 
   <script>
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCtki-el1Or7U9wjnddNSdoDZH486gWTUB7sdo_fugwgr5PheHBEe0pyFOzWaI-urREr3ykgdyskK0/pubhtml'; // reemplaza con tu link
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCtki-el1Or7U9wjnddNSdoDZH486gWTUB7sdo_fugwgr5PheHBEe0pyFOzWaI-urREr3ykgdyskK0/pub?output=csv'; // reemplaza con tu link
 
     fetch(url)
       .then(res => res.text())
       .then(data => {
         // separar filas y quitar líneas vacías
-        const rows = data.trim().split('\n').map(r => r.split(','));
+        const rows = data.trim().split('\n').map(r => 
+          r.split(',').map(c => c.trim()) // quitar espacios extra
+        );
 
-        // fila 1 (índice 1) = Usuario 1
-        const usuario1 = rows[1].map(c => c.trim()); // quitar espacios extra
+        // fila 1 = Usuario 1
+        const usuario1 = rows[1];
 
         document.getElementById('nombre').textContent = usuario1[0];
         document.getElementById('edad').textContent = usuario1[1];
