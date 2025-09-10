@@ -14,16 +14,16 @@
   </table>
 
   <script>
-    // URL de tu Google Sheet publicado como CSV
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCtki-el1Or7U9wjnddNSdoDZH486gWTUB7sdo_fugwgr5PheHBEe0pyFOzWaI-urREr3ykgdyskK0/pubhtml';
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCtki-el1Or7U9wjnddNSdoDZH486gWTUB7sdo_fugwgr5PheHBEe0pyFOzWaI-urREr3ykgdyskK0/pubhtml'; // reemplaza con tu link
 
     fetch(url)
       .then(res => res.text())
       .then(data => {
-        const rows = data.split('\n').map(r => r.split(','));
-        
-        // Asumimos que la fila 0 es encabezado y fila 1 es Usuario 1
-        const usuario1 = rows[1];
+        // separar filas y quitar líneas vacías
+        const rows = data.trim().split('\n').map(r => r.split(','));
+
+        // fila 1 (índice 1) = Usuario 1
+        const usuario1 = rows[1].map(c => c.trim()); // quitar espacios extra
 
         document.getElementById('nombre').textContent = usuario1[0];
         document.getElementById('edad').textContent = usuario1[1];
